@@ -1,11 +1,14 @@
 package com.hrms.steps;
 
+import org.junit.Assert;
+
 import com.hrms.pages.LoginPageElements;
 import com.hrms.testbase.BaseClass;
 import com.hrms.utils.CommonMethods;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class LoginSteps extends CommonMethods {
 
@@ -32,7 +35,25 @@ click(login.loginBtn);
 @Then("I successfully logged in")
 public void i_successfully_logged_in() {
 System.out.println("I am logged in");
-}	
 }
+
+@When("I enter valid username and invalid password")
+public void i_enter_valid_username_and_invalid_password() {
+	login=new LoginPageElements();
+	sendText(login.username, "Admin");
+	  sendText(login.password, "66jhhj");
+}
+
+@Then("I see error message")
+public void i_see_error_message() {
+   boolean error=login.errorMsg.isDisplayed();
+Assert.assertTrue("Error message is not displayed", error);
+}
+@Then("I close browser")
+public void i_close_browser() {
+   BaseClass.tearDown();
+}
+}
+
 
 
